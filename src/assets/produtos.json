@@ -1,0 +1,132 @@
+[
+    {
+      "id": 5,
+      "nome": "produto2",
+      "preco": 50.0,
+      "estoque": 1000,
+      "descricao": "tradicional torra escura carvão",
+      "img": "<link_imagem>",
+      "variantes": [
+        "pilão",
+        "melita"
+      ],
+      "horaDaConsulta": "2025-02-14T22:23:37.5523442-03:00"
+    },
+    {
+      "id": 6,
+      "nome": "produto1",
+      "preco": 50.0,
+      "estoque": 1000,
+      "descricao": "tradicional torra escura carvão",
+      "img": "<link_imagem>",
+      "variantes": [
+        "pilão",
+        "melita"
+      ],
+      "horaDaConsulta": "2025-02-14T22:23:37.5523455-03:00"
+    },
+    {
+      "id": 7,
+      "nome": "produto3",
+      "preco": 1.0,
+      "estoque": 1000,
+      "descricao": "tradicional torra escura carvão",
+      "img": "<link_imagem>",
+      "variantes": [
+        "pilão",
+        "melita"
+      ],
+      "horaDaConsulta": "2025-02-14T22:23:37.5523457-03:00"
+    },
+    {
+      "id": 8,
+      "nome": "produto3",
+      "preco": 1.0,
+      "estoque": 1000,
+      "descricao": "tradicional torra escura carvão",
+      "img": "<link_imagem>",
+      "variantes": [
+        "pilão",
+        "melita"
+      ],
+      "horaDaConsulta": "2025-02-14T22:23:37.5523457-03:00"
+    },
+    {
+      "id": 9,
+      "nome": "produto3",
+      "preco": 1.0,
+      "estoque": 1000,
+      "descricao": "tradicional torra escura carvão",
+      "img": "<link_imagem>",
+      "variantes": [
+        "pilão",
+        "melita"
+      ],
+      "horaDaConsulta": "2025-02-14T22:23:37.5523457-03:00"
+    },
+    {
+      "id": 10,
+      "nome": "produto3",
+      "preco": 1.0,
+      "estoque": 1000,
+      "descricao": "tradicional torra escura carvão",
+      "img": "<link_imagem>",
+      "variantes": [
+        "pilão",
+        "melita"
+      ],
+      "horaDaConsulta": "2025-02-14T22:23:37.5523457-03:00"
+    },
+    {
+      "id": 11,
+      "nome": "produto3",
+      "preco": 1.0,
+      "estoque": 1000,
+      "descricao": "tradicional torra escura carvão",
+      "img": "<link_imagem>",
+      "variantes": [
+        "pilão",
+        "melita"
+      ],
+      "horaDaConsulta": "2025-02-14T22:23:37.5523457-03:00"
+    },
+    {
+      "id": 12,
+      "nome": "produto3",
+      "preco": 1.0,
+      "estoque": 1000,
+      "descricao": "tradicional torra escura carvão",
+      "img": "<link_imagem>",
+      "variantes": [
+        "pilão",
+        "melita"
+      ],
+      "horaDaConsulta": "2025-02-14T22:23:37.5523457-03:00"
+    },
+    {
+      "id": 13,
+      "nome": "produto3",
+      "preco": 1.0,
+      "estoque": 1000,
+      "descricao": "tradicional torra escura carvão",
+      "img": "<link_imagem>",
+      "variantes": [
+        "pilão",
+        "melita"
+      ],
+      "horaDaConsulta": "2025-02-14T22:23:37.5523457-03:00"
+    },
+    {
+      "id": 14,
+      "nome": "produto3",
+      "preco": 1.0,
+      "estoque": 1000,
+      "descricao": "tradicional torra escura carvão",
+      "img": "<link_imagem>",
+      "variantes": [
+        "pilão",
+        "melita"
+      ],
+      "horaDaConsulta": "2025-02-14T22:23:37.5523457-03:00"
+    }
+]
