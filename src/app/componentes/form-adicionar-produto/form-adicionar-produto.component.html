@@ -1,4 +1,4 @@
-<section class="mx-auto flex flex-col bg-teal-50 dark:bg-cyan-600 max-w-5/20 w-auto mt-5 rounded-lg shadow-2xl">
+<section class="mx-auto flex flex-col bg-teal-50 dark:bg-blue-500 max-w-5/20 w-auto mt-5 rounded-lg shadow-2xl">
     <h1 class="text-3xl font-bold mb-5 ml-2">Adicionar Produto</h1>
     <form [formGroup]="formAdicionarProduto" (ngSubmit)="adicionarProduto()" class="flex flex-col min-w-7/10 max-w-8/10 pl-2">
         <label for="nome">Nome</label>
@@ -6,7 +6,7 @@
 
         <label for="preco">Preço</label>
         <div class="flex relative items-center">
-            <span class="absolute inset-y-0 start-0 pt-1 flex items-center pointer-events-none dark:text-gray-300 bg-gray-50 dark:bg-gray-700 mr-2 max-w-16 max-h-8 rounded-l-lg">R$</span>
+            <span class="absolute inset-y-0 start-0 pt-1 ps-1 flex items-center pointer-events-none dark:text-gray-300 bg-gray-50 dark:bg-gray-700 mr-2 max-w-16 max-h-8 rounded-l-lg">R$</span>
             <input formControlName="preco" id="preco" type="text" inputmode="numeric" required placeholder="1.99" class="p-2 mb-2 ps-6 w-1/4 h-auto text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"/>
         </div>
         @if (formEnviado && formAdicionarProduto.invalid && formAdicionarProduto.get('preco')?.errors) {
