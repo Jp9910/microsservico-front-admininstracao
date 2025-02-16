@@ -1,4 +1,4 @@
-import { Component, signal, OnInit } from '@angular/core';
+import { Component, signal, OnInit, Input } from '@angular/core';
 import IProduto from '../../types/Produto';
 import listaDeProdutos from '../../../assets/produtos.json';
 import { FormsModule } from '@angular/forms';
@@ -15,14 +15,15 @@ export class TabelaProdutosComponent {
     // produtosFiltrados = computed(() => this.filtrarPorTexto())
     // produtosFiltrados = signal(this.produtos);
     produtosFiltrados: IProduto[] = listaDeProdutos;
+    @Input() testeProp: string = "";
 
     filtroPorTexto: string = '';
 
-    filtrarPorTexto() {
+    filtrarPorTexto(event: MouseEvent | Event): void {
         this.produtosFiltrados = this.produtos.filter((produto) => produto.nome.toLowerCase().includes(this.filtroPorTexto.toLowerCase()))
     }
 
     ngOnInit(): void {
-        console.log("asdf")
+        console.log(this.testeProp)
     }
 }
