@@ -1,20 +1,24 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators, ValueChangeEvent } from '@angular/forms';
+import { ChamadaAPIService } from '../../services/chamada-api.service';
 
 @Component({
     selector: 'app-form-adicionar-produto',
     imports: [ReactiveFormsModule, CommonModule],
     standalone: true,
     templateUrl: './form-adicionar-produto.component.html',
-    styleUrl: './form-adicionar-produto.component.css'
 })
-export class FormAdicionarProdutoComponent {
+export class FormAdicionarProdutoComponent implements OnInit {
     formAdicionarProduto!: FormGroup; // gerencia o valor e a validação dos dados e estados de um formulário reativo\
     arquivoImagem: File | null = null;
     formEnviado: boolean = false;
-    
-    constructor() {
+
+    // injetar a dependencia do service no componente pelo construtor
+    constructor (private servicoAPI: ChamadaAPIService) { }
+
+    // ngOnInit() é executado quando o componente é criado
+    ngOnInit(): void {
         this.formAdicionarProduto = new FormGroup({
             nome: new FormControl('', Validators.required),
             preco: new FormControl(0, [Validators.required, Validators.min(0.1)]),
@@ -33,7 +37,9 @@ export class FormAdicionarProdutoComponent {
         console.log(this.arquivoImagem)
         if (this.formAdicionarProduto.valid) {
             console.log("Form válido!")
-        } else {
+            this.servicoAPI.chamarAPI();
+        }
+        if (this.formAdicionarProduto.invalid) {
             console.log("Form INVÁLIDO!")
             console.log(this.formAdicionarProduto)
         }
@@ -41,6 +47,7 @@ export class FormAdicionarProdutoComponent {
 
     limparFormulario() {
         this.formEnviado = false;
+        this.formAdicionarProduto.reset();
         console.log("limpar form")
     }
 }
