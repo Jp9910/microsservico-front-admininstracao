@@ -2,6 +2,7 @@ import { Component, signal, OnInit, Input } from '@angular/core';
 import IProduto from '../../types/Produto';
 import listaDeProdutos from '../../../assets/produtos.json';
 import { FormsModule } from '@angular/forms';
+import { ChamadaAPIService } from '../../services/chamada-api.service';
 
 console.log()
 @Component({
@@ -11,19 +12,28 @@ console.log()
     templateUrl: './tabela-produtos.component.html'
 })
 export class TabelaProdutosComponent {
-    produtos: IProduto[] = listaDeProdutos;
-    // produtosFiltrados = computed(() => this.filtrarPorTexto())
-    // produtosFiltrados = signal(this.produtos);
-    produtosFiltrados: IProduto[] = listaDeProdutos;
+    produtos: IProduto[] = [];
+    produtosFiltrados: IProduto[] = [];
     @Input() testeProp: string = "";
-
     filtroPorTexto: string = '';
+
+    constructor(private servicoAPI: ChamadaAPIService) {}
+    
+    ngOnInit(): void {
+        console.log(this.testeProp);
+        this.getProdutos();
+    }
+
+    getProdutos() {
+        this.servicoAPI.getProdutos().subscribe((resposta) => {
+            console.log(resposta)
+            if (resposta.ok && resposta.body) {this.produtos = resposta.body}
+            if (!resposta.ok) {this.produtos = listaDeProdutos}
+            this.produtosFiltrados = this.produtos;
+        })
+    }
 
     filtrarPorTexto(event: MouseEvent | Event): void {
         this.produtosFiltrados = this.produtos.filter((produto) => produto.nome.toLowerCase().includes(this.filtroPorTexto.toLowerCase()))
-    }
-
-    ngOnInit(): void {
-        console.log(this.testeProp)
     }
 }

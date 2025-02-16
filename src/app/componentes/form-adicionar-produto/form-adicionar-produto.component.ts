@@ -33,21 +33,21 @@ export class FormAdicionarProdutoComponent implements OnInit {
 
     adicionarProduto() {
         this.formEnviado = true;
-        console.log(this.formAdicionarProduto.value)
         console.log(this.arquivoImagem)
         if (this.formAdicionarProduto.valid) {
-            console.log("Form válido!")
-            this.servicoAPI.chamarAPI();
+            this.servicoAPI.salvarNovoProduto(this.formAdicionarProduto.value, this.arquivoImagem).subscribe(() => {
+                alert("Produto salvo!")
+                this.formAdicionarProduto.reset();
+            });
         }
         if (this.formAdicionarProduto.invalid) {
             console.log("Form INVÁLIDO!")
-            console.log(this.formAdicionarProduto)
+            alert("Pedido não registrado. Alguns dados no formulários estão inválidos.")
         }
     }
 
     limparFormulario() {
         this.formEnviado = false;
         this.formAdicionarProduto.reset();
-        console.log("limpar form")
     }
 }
