@@ -1,6 +1,12 @@
 <section class="mx-auto flex flex-col bg-teal-50 dark:bg-blue-500 max-w-5/20 w-auto mt-5 rounded-lg shadow-2xl">
-    <h1 class="text-3xl font-bold mb-5 ml-2">Adicionar Produto</h1>
-    <form [formGroup]="formAdicionarProduto" (ngSubmit)="adicionarProduto()" class="flex flex-col min-w-7/10 max-w-8/10 pl-2">
+    <div class="flex justify-between mt-2">
+        <h1 class="text-3xl font-bold mb-5 ml-2">{{tituloFormulario}}</h1>
+        <button class="flex mr-2 hover:cursor-pointer max-w-20 h-9" type="button" [routerLink]="['/produtos']">
+            <svg width="32px" height="32px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#000000" stroke="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill="#ffffff" d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z"></path><path fill="#ffffff" d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z"></path></g></svg>
+            <span class="pt-1">Voltar</span>
+        </button>
+    </div>
+    <form [formGroup]="formAdicionarProduto" (ngSubmit)="adicionarOuEditarProduto()" class="flex flex-col min-w-7/10 max-w-8/10 pl-2">
         <label for="nome">Nome</label>
         <input formControlName="nome" id="nome" type="text" required placeholder="Camisa preta com estampa" class="mb-2 w-4/5 p-2 h-auto text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"/>
 

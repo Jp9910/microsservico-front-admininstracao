@@ -31,7 +31,7 @@ export class ChamadaAPIService {
     }
     
     getUsuarios() {
-        return this.http.get<IUsuario[]>
+        // return this.http.get<IUsuario[]>
     }
 
     salvarNovoProduto(produto: IProduto, imagem: File|null): Observable<HttpResponse<IProduto>> {
@@ -41,19 +41,20 @@ export class ChamadaAPIService {
     }
     
     salvarNovoUsuario() {
-        console.log("fazer o post pra api de usuario")
+        
     }
 
-    atualizarProduto() {
-
+    atualizarProduto(id:number, produto: IProduto, imagem: File|null) {
+        console.log(imagem)
+        return this.http.put<IProduto>(this.urlApiProdutos.concat("/api/produto"), produto, {observe: "response", headers: {}})
     }
 
     atualizarUsuario() {
 
     }
     
-    excluirProduto() {
-        
+    excluirProduto(id: number): Observable<HttpResponse<IProduto>> {
+        return this.http.delete<IProduto>(this.urlApiProdutos.concat(`/api/produto${id}`), {observe: "response", headers: {}})
     }
 
     excluirUsuario() {
