@@ -17,12 +17,12 @@ export const routes: Routes = [
         pathMatch: 'prefix',
         component: FormProdutoComponent,
         data: {titulo: "Adicionar Produto"},
-        title: "Adicionar produto"
+        title: "Adicionar Produto"
     },
     {
         path: 'editarproduto/:id',
         component: FormProdutoComponent,
-        title: "Editar produto"
+        title: "Editar Produto"
     },
     {
         path: '',

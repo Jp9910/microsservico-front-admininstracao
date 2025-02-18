@@ -6,7 +6,7 @@
             <span class="pt-1">Voltar</span>
         </button>
     </div>
-    <form [formGroup]="formAdicionarProduto" (ngSubmit)="adicionarOuEditarProduto()" class="flex flex-col min-w-7/10 max-w-8/10 pl-2">
+    <form [formGroup]="formularioProduto" (ngSubmit)="adicionarOuEditarProduto()" class="flex flex-col min-w-7/10 max-w-8/10 pl-2">
         <label for="nome">Nome</label>
         <input formControlName="nome" id="nome" type="text" required placeholder="Camisa preta com estampa" class="mb-2 w-4/5 p-2 h-auto text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"/>
 
@@ -15,9 +15,6 @@
             <span class="absolute inset-y-0 start-0 pt-1 ps-1 flex items-center pointer-events-none dark:text-gray-300 bg-gray-50 dark:bg-gray-700 mr-2 max-w-16 max-h-8 rounded-l-lg">R$</span>
             <input formControlName="preco" id="preco" type="text" inputmode="numeric" required placeholder="1.99" class="p-2 mb-2 ps-6 w-1/4 h-auto text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"/>
         </div>
-        @if (formEnviado && formAdicionarProduto.invalid && formAdicionarProduto.get('preco')?.errors) {
-            <span>Preço deve ser um número, no mínimo 0.1</span>
-        }
 
         <label for="estoque">Quantidade em estoque</label>
         <input formControlName="estoque" id="estoque" type="text" inputmode="numeric" required placeholder="100" class="mb-2 w-1/4 p-2 h-auto text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"/>
@@ -39,10 +36,10 @@
             >Limpar</button>
             <button
                 type="submit"
-                [disabled]="formAdicionarProduto.invalid"
+                [disabled]="formularioProduto.invalid"
                 class="h-auto inline-flex items-center px-3 py-2 text-sm font-medium text-center rounded-lg text-white  focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800"
-                [ngClass]="formAdicionarProduto.valid? 'cursor-pointer bg-cyan-700 hover:bg-cyan-800 dark:bg-cyan-700 dark:hover:bg-cyan-900': 'cursor-not-allowed bg-gray-600'"
-            >Adicionar</button>
+                [ngClass]="formularioProduto.valid? 'cursor-pointer bg-cyan-700 hover:bg-cyan-800 dark:bg-cyan-700 dark:hover:bg-cyan-900': 'cursor-not-allowed bg-gray-600'"
+            >Salvar</button>
         </section>
     </form>
 </section>

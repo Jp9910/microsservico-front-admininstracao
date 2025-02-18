@@ -3,6 +3,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators, ValueChangeEvent } from '@angular/forms';
 import { ChamadaAPIService } from '../../services/chamada-api.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { catchError } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'app-form-adicionar-produto',
@@ -11,10 +13,12 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
     templateUrl: './form-produto.component.html',
 })
 export class FormProdutoComponent implements OnInit {
-    formAdicionarProduto!: FormGroup; // gerencia o valor e a validação dos dados e estados de um formulário reativo\
+    formularioProduto!: FormGroup; // gerencia o valor e a validação dos dados e estados de um formulário reativo\
     arquivoImagem: File | null = null;
     formEnviado: boolean = false;
+    idProduto: string|null = null;
     @Input() tituloFormulario?: string = "";
+
 
     // injetar a dependencia do service no componente pelo construtor
     constructor (private servicoAPI: ChamadaAPIService, private activatedRoute: ActivatedRoute) { }
@@ -23,12 +27,15 @@ export class FormProdutoComponent implements OnInit {
     ngOnInit(): void {
         console.log(this.activatedRoute.snapshot.data['titulo']) // Vem do app.routes.ts
         this.tituloFormulario = this.activatedRoute.snapshot.title // Vem do app.routes.ts
-        this.formAdicionarProduto = new FormGroup({
+        this.idProduto = this.activatedRoute.snapshot.paramMap.get('id'); // só vai existir se for na url de edição de produto
+        console.log("Id produto: "+this.idProduto);
+        this.formularioProduto = new FormGroup({
             nome: new FormControl('', Validators.required),
             preco: new FormControl(0, [Validators.required, Validators.min(0.1)]),
             estoque: new FormControl('', [Validators.required, Validators.min(1)]),
             descricao: new FormControl(''),
         });
+        if (this.idProduto) {this.getProduto();} // popular informações do formulário de edição
     }
 
     arquivoSelecionado(event: any) {
@@ -36,34 +43,54 @@ export class FormProdutoComponent implements OnInit {
     }
 
     adicionarProduto() {
-        this.formEnviado = true;
-        console.log(this.arquivoImagem)
-        if (this.formAdicionarProduto.valid) {
-            this.servicoAPI.salvarNovoProduto(this.formAdicionarProduto.value, this.arquivoImagem).subscribe(() => {
-                alert("Produto salvo!")
-                this.formAdicionarProduto.reset();
-            });
-        }
-        if (this.formAdicionarProduto.invalid) {
-            console.log("Form INVÁLIDO!")
-            alert("Pedido não registrado. Alguns dados no formulários estão inválidos.")
-        }
+        console.log("Adicionando produto...")
+        this.servicoAPI.salvarNovoProduto(this.formularioProduto.value, this.arquivoImagem).subscribe(() => {
+            alert("Produto salvo!")
+            this.formularioProduto.reset();
+        });
     }
 
-    editarProduto(id: number): void {
+    editarProduto(): void {
         console.log("Editando produto...")
-        this.servicoAPI.atualizarProduto(id, produto)
+        this.servicoAPI.atualizarProduto(parseInt(this.idProduto!), this.formularioProduto.value, this.arquivoImagem)
             .pipe(catchError(this.handleErroRequisicao))
-            .subscribe((resposta) => {console.log(resposta)});
+            .subscribe((resposta) => {
+                console.log(resposta)
+                alert("Produto atualizado!")
+            });
     }
 
-    adicionarOuEditarProduto() {
-        if (this.tituloFormulario === "Editar produto") {this.editarProduto()} 
-        if (this.tituloFormulario === "Adicionar produto") {this.adicionarProduto()}
+    adicionarOuEditarProduto(): void {
+        this.formEnviado = true;
+        if (this.idProduto && this.formularioProduto.valid) {
+            return this.editarProduto()
+        }
+        if (!this.idProduto && this.formularioProduto.valid) {
+            return this.adicionarProduto()
+        }
+        if (this.formularioProduto.invalid) {
+            alert("Não foi possível salvar o produto. Alguns dados no formulários estão inválidos.")
+        }
     }
 
     limparFormulario() {
         this.formEnviado = false;
-        this.formAdicionarProduto.reset();
+        this.formularioProduto.reset();
+    }
+
+    getProduto() {
+        if (this.idProduto) {
+            this.servicoAPI.getProduto(parseInt(this.idProduto))
+                .subscribe((produto) => {
+                    console.log(produto.body)
+                    if(produto.body) {this.formularioProduto.patchValue(produto.body);}
+                });
+        }
+    }
+
+    handleErroRequisicao(erro: HttpErrorResponse) {
+        // alert("Erro ao processar requisição :(");
+        console.error(erro)
+        return []
     }
 }

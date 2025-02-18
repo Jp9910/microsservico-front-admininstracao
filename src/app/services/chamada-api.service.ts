@@ -29,6 +29,10 @@ export class ChamadaAPIService {
     getProdutos(): Observable<HttpResponse<IProduto[]>> {
         return this.http.get<IProduto[]>(this.urlApiProdutos.concat("/api/produto"), {observe: 'response'})
     }
+
+    getProduto(id: number): Observable<HttpResponse<IProduto>> {
+        return this.http.get<IProduto>(this.urlApiProdutos.concat(`/api/produto/${id}`), {observe: 'response'})
+    }
     
     getUsuarios() {
         // return this.http.get<IUsuario[]>
@@ -45,8 +49,10 @@ export class ChamadaAPIService {
     }
 
     atualizarProduto(id:number, produto: IProduto, imagem: File|null) {
+        console.log(id)
+        console.log(produto)
         console.log(imagem)
-        return this.http.put<IProduto>(this.urlApiProdutos.concat("/api/produto"), produto, {observe: "response", headers: {}})
+        return this.http.put<IProduto>(this.urlApiProdutos.concat(`/api/produto/${id}`), produto, {observe: "response", headers: {}})
     }
 
     atualizarUsuario() {
@@ -54,7 +60,7 @@ export class ChamadaAPIService {
     }
     
     excluirProduto(id: number): Observable<HttpResponse<IProduto>> {
-        return this.http.delete<IProduto>(this.urlApiProdutos.concat(`/api/produto${id}`), {observe: "response", headers: {}})
+        return this.http.delete<IProduto>(this.urlApiProdutos.concat(`/api/produto/${id}`), {observe: "response", headers: {}})
     }
 
     excluirUsuario() {
