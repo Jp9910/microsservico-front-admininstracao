@@ -34,19 +34,31 @@ export class FormProdutoComponent implements OnInit {
             preco: new FormControl(0, [Validators.required, Validators.min(0.1)]),
             estoque: new FormControl('', [Validators.required, Validators.min(1)]),
             descricao: new FormControl(''),
+            imagem: new FormControl('')
         });
         if (this.idProduto) {this.getProduto();} // popular informações do formulário de edição
     }
 
     arquivoSelecionado(event: any) {
         this.arquivoImagem = event.target.files[0] ?? null;
+        if (this.arquivoImagem) {
+            // Ler arquivo
+            const reader = new FileReader();
+            reader.onload = () => {
+                console.log(reader.result)
+                if(reader.result) {
+                    this.formularioProduto.get('imagem')?.setValue(reader.result)
+                }
+            }
+            reader.readAsDataURL(this.arquivoImagem) // transformar a em string BASE64
+        }
     }
 
     adicionarProduto() {
         console.log("Adicionando produto...")
         this.servicoAPI.salvarNovoProduto(this.formularioProduto.value, this.arquivoImagem).subscribe(() => {
             alert("Produto salvo!")
-            this.formularioProduto.reset();
+            this.limparFormulario();
         });
     }
 
@@ -80,7 +92,7 @@ export class FormProdutoComponent implements OnInit {
 
     getProduto() {
         if (this.idProduto) {
-            this.servicoAPI.getProduto(parseInt(this.idProduto))
+            this.servicoAPI.getProdutoPorId(parseInt(this.idProduto))
                 .subscribe((produto) => {
                     console.log(produto.body)
                     if(produto.body) {this.formularioProduto.patchValue(produto.body);}

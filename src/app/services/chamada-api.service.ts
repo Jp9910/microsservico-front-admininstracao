@@ -26,12 +26,29 @@ export class ChamadaAPIService {
      * Note: Observables created by HttpClient may be subscribed any number of times and will make a new backend request for each subscription.
      */
 
-    getProdutos(): Observable<HttpResponse<IProduto[]>> {
-        return this.http.get<IProduto[]>(this.urlApiProdutos.concat("/api/produto"), {observe: 'response'})
+    getProdutos(pagina: number = 1, qntTake: number = 10): Observable<HttpResponse<IProduto[]>> {
+        return this.http.get<IProduto[]>(
+            this.urlApiProdutos.concat("/api/produto"), 
+            {
+                observe: 'response', 
+                params: {skip : qntTake*(pagina-1), take: qntTake}
+            }
+        )
     }
 
-    getProduto(id: number): Observable<HttpResponse<IProduto>> {
+    getProdutoPorId(id: number): Observable<HttpResponse<IProduto>> {
         return this.http.get<IProduto>(this.urlApiProdutos.concat(`/api/produto/${id}`), {observe: 'response'})
+    }
+
+    // /api/produto/busca?filtroNome=produto1
+    getProdutoPorNome(nome: string, pagina: number = 1, qntTake: number = 10): Observable<HttpResponse<IProduto[]>> {
+        return this.http.get<IProduto[]>(
+            this.urlApiProdutos.concat("/api/produto/busca"), 
+            {
+                observe: 'response', 
+                params: {filtroNome: nome, skip : qntTake*(pagina-1), take: qntTake}
+            }
+        )
     }
     
     getUsuarios() {
