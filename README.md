@@ -1,5 +1,9 @@
 # MicrosservicoFrontAdministracao
 
+## Usar o pipeline de CI rústico:
+ 1. Instalar a ferramenta make
+ 2. Executar `make ci` na raiz do projeto (que executará `ng lint` e `ng test`)
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.7.
 
 ## Development server
