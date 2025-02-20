@@ -1,0 +1,43 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Node.js CI
+
+on:
+    push:
+      branches: [ "main" ]
+    pull_request:
+      branches: [ "main" ]
+
+jobs: # Um job é um conjunto de passos (testes e lint por exemplo), e jobs diferentes podem ser executados em paralelo
+    build:
+
+      runs-on: ubuntu-latest
+
+      strategy:
+        matrix:
+          node-version: [18.x, 20.x, 22.x]
+          # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+      steps:
+      # "uses" vai usar uma action existente. "run" executa algum comando
+    
+      - uses: actions/checkout@v4 # Action padrão do github. Vai clonar o código, definir permissões apropriadas de arquivos, e acessar a pasta
+    
+      - name: Usar Node.js versão ${{ matrix.node-version }} # Dar um nome pra ação
+        uses: actions/setup-node@v4 # Action também padrão do github. Vai fazer o setup do node
+        with: # passar uma variável para essa action
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+    
+      - name: Rodar um container necessário
+        run: docker run hello-world # Os servidores do GitHub Actions já vem com docker, git, e outras ferramentas comuns instaladas
+
+      - run: npm ci # Instala as dependências, assim como o npm install, só que a partir do package-lock, então vai instalar as dependências na versão exata especificada lá (já inclui o angular CLI)
+
+      - name: Executar Lint
+        run: npm run lint # (`ng lint`)
+
+      - run: npm run build --if-present # Executa o comando `build` do package.json
+
+      - run: npm test # Executa o comando `test` do package.json
