@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators, ValueChangeEvent } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ChamadaAPIService } from '../../services/chamada-api.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { catchError } from 'rxjs';
@@ -15,7 +15,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class FormProdutoComponent implements OnInit {
     formularioProduto!: FormGroup; // gerencia o valor e a validação dos dados e estados de um formulário reativo\
     arquivoImagem: File | null = null;
-    formEnviado: boolean = false;
+    formEnviado = false;
     idProduto: string|null = null;
     @Input() tituloFormulario?: string = "";
 
@@ -39,8 +39,9 @@ export class FormProdutoComponent implements OnInit {
         if (this.idProduto) {this.getProduto();} // popular informações do formulário de edição
     }
 
-    arquivoSelecionado(event: any) {
-        this.arquivoImagem = event.target.files[0] ?? null;
+    arquivoSelecionado(event: Event) {
+        const input = event.target as HTMLInputElement;
+        this.arquivoImagem = input.files?.length ? input.files[0] : null; //https://stackoverflow.com/questions/57700163/what-typescript-type-is-a-change-event-in-angular
         if (this.arquivoImagem) {
             // Ler arquivo
             const reader = new FileReader();

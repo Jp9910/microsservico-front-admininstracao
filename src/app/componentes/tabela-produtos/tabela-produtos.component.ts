@@ -1,11 +1,11 @@
-import { Component, signal, OnInit, Input } from '@angular/core';
-import IProduto from '../../types/Produto';
-import listaDeProdutos from '../../../assets/produtos.json';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ChamadaAPIService } from '../../services/chamada-api.service';
-import { catchError, pipe, retry } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
+import { catchError, retry } from 'rxjs';
+import { ChamadaAPIService } from '../../services/chamada-api.service';
+import IProduto from '../../types/Produto';
+// import listaDeProdutos from '../../../assets/produtos.json';
 
 console.log()
 @Component({
@@ -16,11 +16,11 @@ console.log()
 })
 export class TabelaProdutosComponent implements OnInit {
     produtos: IProduto[] = [];
-    estaUsandoFiltro: boolean = false;
-    @Input() testeProp: string = "";
-    filtroPorTexto: string = '';
-    paginaTabela: number = 1;
-    qntProdutosPorPagina: number = 10;
+    estaUsandoFiltro = false;
+    @Input() testeProp = "";
+    filtroPorTexto = '';
+    paginaTabela = 1;
+    qntProdutosPorPagina = 10;
 
     constructor(private servicoAPI: ChamadaAPIService) {}
     
@@ -29,7 +29,7 @@ export class TabelaProdutosComponent implements OnInit {
         this.getProdutos();
     }
 
-    filtrarPorNome(event: MouseEvent | Event): void {
+    filtrarPorNome(/*event: MouseEvent | Event*/): void {
         if (this.filtroPorTexto === "" && this.estaUsandoFiltro) {
             return this.getProdutos();
         }

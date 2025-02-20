@@ -12,7 +12,9 @@ import { ContainerComponent } from './componentes/container/container.component'
     templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {
-    title: string = 'Loja - Administração';
+    title = 'Loja - Administração';
+    
+    // TODO: Adicionar biblioteca para end2end testing (ng e2e) e para deploy (ng deploy)
 
     // Da pra usar essa função sem implementar a interface OnInit, mas é uma boa prática implementar
     ngOnInit(): void {

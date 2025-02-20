@@ -10,9 +10,9 @@ import { Observable } from 'rxjs';
 export class ChamadaAPIService {
 
     parametros: URLSearchParams = new URLSearchParams();
-    body: Object = {};
-    private readonly urlApiUsuarios:string = ""; // TODO: parametrizar
-    private readonly urlApiProdutos:string = "https://localhost:7285";
+    body: object = {};
+    private readonly urlApiUsuarios:string = "http://localhost:8080"; // TODO: parametrizar
+    private readonly urlApiProdutos:string = "https://localhost:7285"; // TODO: parametrizar
 
     constructor(private http: HttpClient) { }
 
@@ -26,7 +26,7 @@ export class ChamadaAPIService {
      * Note: Observables created by HttpClient may be subscribed any number of times and will make a new backend request for each subscription.
      */
 
-    getProdutos(pagina: number = 1, qntTake: number = 10): Observable<HttpResponse<IProduto[]>> {
+    getProdutos(pagina = 1, qntTake = 10): Observable<HttpResponse<IProduto[]>> {
         return this.http.get<IProduto[]>(
             this.urlApiProdutos.concat("/api/produto"), 
             {
@@ -41,9 +41,9 @@ export class ChamadaAPIService {
     }
 
     // /api/produto/busca?filtroNome=produto1
-    getProdutoPorNome(nome: string, pagina: number = 1, qntTake: number = 10): Observable<HttpResponse<IProduto[]>> {
+    getProdutoPorNome(nome: string, pagina = 1, qntTake = 10): Observable<HttpResponse<IProduto[]>> {
         return this.http.get<IProduto[]>(
-            this.urlApiProdutos.concat("/api/produto/busca"), 
+            this.urlApiProdutos.concat("/api/produto/buscapornome"), 
             {
                 observe: 'response', 
                 params: {filtroNome: nome, skip : qntTake*(pagina-1), take: qntTake}
@@ -51,8 +51,16 @@ export class ChamadaAPIService {
         )
     }
     
-    getUsuarios() {
+    getUsuarios(pagina = 1, qntTake = 10): Observable<HttpResponse<IUsuario[]>> {
         // return this.http.get<IUsuario[]>
+        console.log(pagina, qntTake)
+        return this.http.get<IUsuario[]>(
+            this.urlApiUsuarios.concat("/usuarios"), 
+            {
+                observe: 'response', 
+                params: {page : pagina, size: qntTake, sort: "id,desc"}
+            }
+        )
     }
 
     salvarNovoProduto(produto: IProduto, imagem: File|null): Observable<HttpResponse<IProduto>> {
@@ -62,7 +70,7 @@ export class ChamadaAPIService {
     }
     
     salvarNovoUsuario() {
-        
+        console.log("salvar user")
     }
 
     atualizarProduto(id:number, produto: IProduto, imagem: File|null) {
@@ -73,7 +81,7 @@ export class ChamadaAPIService {
     }
 
     atualizarUsuario() {
-
+        console.log("atualizar user")
     }
     
     excluirProduto(id: number): Observable<HttpResponse<IProduto>> {
@@ -81,7 +89,7 @@ export class ChamadaAPIService {
     }
 
     excluirUsuario() {
-
+        console.log("excluir user")
     }
 }
 
