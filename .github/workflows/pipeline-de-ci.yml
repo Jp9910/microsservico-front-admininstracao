@@ -17,7 +17,7 @@ jobs: # Um job é um conjunto de passos (testes e lint por exemplo), e jobs dife
         strategy:
             matrix:
                 node-version: [20.x]
-                # node-version: [18.x, 20.x, 22.x] # Isso criaria 
+                # node-version: [18.x, 20.x, 22.x] # Isso criaria multiplos artefatos ao mesmo tempo no ultimo passo
                 # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
         steps:
@@ -43,19 +43,8 @@ jobs: # Um job é um conjunto de passos (testes e lint por exemplo), e jobs dife
 
         - name: Gerar artefato (transpilar de TS para JS) # [1]
           run: npm run build --if-present # Executa o comando `build` do package.json, se existir
-    
-    entrega-continua:
 
-        runs-on: ubuntu-latest
-
-        strategy:
-            matrix:
-                node-version: [20.x]
-                # node-version: [18.x, 20.x, 22.x] # Isso criaria multiplos artefatos ao mesmo tempo
-
-        steps:
-
-        - name: Fazer upload do artefato
+        - name: Fazer upload do artefato # Esse passo se encaixaria como CD, mas separar em outro job faria com que fosse necessario reinstalar o repo, node e dependencias. Então vou manter aqui por simplicidade
           uses: actions/upload-artifact@v4
           with:
               name: artefato_front_administracao
