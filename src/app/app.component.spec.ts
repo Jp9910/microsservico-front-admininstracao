@@ -14,16 +14,17 @@ describe('AppComponent', () => {
         expect(app).toBeTruthy();
     });
 
-    it(`should have the 'microsservico-front-administracao' title`, () => {
+    it(`should have the 'Loja - Administração' title`, () => {
         const fixture = TestBed.createComponent(AppComponent);
         const app = fixture.componentInstance;
-        expect(app.title).toEqual('microsservico-front-administracao');
+        expect(app.title).toEqual('Loja - Administração');
     });
 
-    it('should render title', () => {
-        const fixture = TestBed.createComponent(AppComponent);
-        fixture.detectChanges();
-        const compiled = fixture.nativeElement as HTMLElement;
-        expect(compiled.querySelector('h1')?.textContent).toContain('Hello, microsservico-front-administracao');
-    });
+    // // O componente app usa renderiza o que vem no roteamento, então não da pra fazer esse teste
+    // it('should render title', () => {
+    //     const fixture = TestBed.createComponent(AppComponent);
+    //     fixture.detectChanges();
+    //     const compiled = fixture.nativeElement as HTMLElement;
+    //     expect(compiled.querySelector('h1')?.textContent).toContain('Hello, microsservico-front-administracao');
+    // });
 });
