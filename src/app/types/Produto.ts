@@ -4,5 +4,5 @@ export default interface IProduto {
     preco: number,
     estoque: number,
     descricao:string,
-    img:string
+    imagem:string
 }

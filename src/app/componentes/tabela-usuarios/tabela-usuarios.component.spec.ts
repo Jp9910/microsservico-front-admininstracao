@@ -1,25 +1,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { UsuariosComponent } from './usuarios.component';
-import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
+import { TabelaUsuariosComponent } from './tabela-usuarios.component';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 
-describe('UsuariosComponent', () => {
-    let component: UsuariosComponent;
-    let fixture: ComponentFixture<UsuariosComponent>;
+describe('TabelaUsuariosComponent', () => {
+    let component: TabelaUsuariosComponent;
+    let fixture: ComponentFixture<TabelaUsuariosComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [UsuariosComponent],
+            imports: [TabelaUsuariosComponent],
             providers: [
-                provideRouter([]),
                 provideHttpClient(),
                 provideHttpClientTesting(),
             ],
         })
             .compileComponents();
 
-        fixture = TestBed.createComponent(UsuariosComponent);
+        fixture = TestBed.createComponent(TabelaUsuariosComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

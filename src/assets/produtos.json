@@ -5,7 +5,7 @@
       "preco": 50.0,
       "estoque": 1000,
       "descricao": "tradicional torra escura carvão",
-      "img": "<link_imagem>",
+      "imagem": "<link_imagem>",
       "variantes": [
         "pilão",
         "melita"
@@ -18,7 +18,7 @@
       "preco": 50.0,
       "estoque": 1000,
       "descricao": "tradicional torra escura carvão",
-      "img": "<link_imagem>",
+      "imagem": "<link_imagem>",
       "variantes": [
         "pilão",
         "melita"
@@ -31,7 +31,7 @@
       "preco": 1.0,
       "estoque": 1000,
       "descricao": "tradicional torra escura carvão",
-      "img": "<link_imagem>",
+      "imagem": "<link_imagem>",
       "variantes": [
         "pilão",
         "melita"
@@ -44,7 +44,7 @@
       "preco": 1.0,
       "estoque": 1000,
       "descricao": "tradicional torra escura carvão",
-      "img": "<link_imagem>",
+      "imagem": "<link_imagem>",
       "variantes": [
         "pilão",
         "melita"
@@ -57,7 +57,7 @@
       "preco": 1.0,
       "estoque": 1000,
       "descricao": "tradicional torra escura carvão",
-      "img": "<link_imagem>",
+      "imagem": "<link_imagem>",
       "variantes": [
         "pilão",
         "melita"
@@ -70,7 +70,7 @@
       "preco": 1.0,
       "estoque": 1000,
       "descricao": "tradicional torra escura carvão",
-      "img": "<link_imagem>",
+      "imagem": "<link_imagem>",
       "variantes": [
         "pilão",
         "melita"
@@ -83,7 +83,7 @@
       "preco": 1.0,
       "estoque": 1000,
       "descricao": "tradicional torra escura carvão",
-      "img": "<link_imagem>",
+      "imagem": "<link_imagem>",
       "variantes": [
         "pilão",
         "melita"
@@ -96,7 +96,7 @@
       "preco": 1.0,
       "estoque": 1000,
       "descricao": "tradicional torra escura carvão",
-      "img": "<link_imagem>",
+      "imagem": "<link_imagem>",
       "variantes": [
         "pilão",
         "melita"
@@ -109,7 +109,7 @@
       "preco": 1.0,
       "estoque": 1000,
       "descricao": "tradicional torra escura carvão",
-      "img": "<link_imagem>",
+      "imagem": "<link_imagem>",
       "variantes": [
         "pilão",
         "melita"
@@ -122,7 +122,7 @@
       "preco": 1.0,
       "estoque": 1000,
       "descricao": "tradicional torra escura carvão",
-      "img": "<link_imagem>",
+      "imagem": "<link_imagem>",
       "variantes": [
         "pilão",
         "melita"

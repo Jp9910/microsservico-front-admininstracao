@@ -2,8 +2,14 @@ import { Routes } from '@angular/router';
 import { FormProdutoComponent } from './componentes/form-produto/form-produto.component';
 import { ProdutosComponent } from './paginas/produtos/produtos.component';
 import { UsuariosComponent } from './paginas/usuarios/usuarios.component';
+import { FormUsuarioComponent } from './componentes/form-usuario/form-usuario.component';
+import { HomeComponent } from './paginas/home/home.component';
 
 export const routes: Routes = [
+    {
+        path: 'home',
+        component: HomeComponent
+    },
     {
         path: 'produtos',
         component: ProdutosComponent
@@ -27,7 +33,13 @@ export const routes: Routes = [
     {
         path: '',
         pathMatch: 'full', // o path inteiro deve ser '' para dar match
-        redirectTo: '/produtos'
+        redirectTo: '/home'
+    },
+    {
+        path: 'adicionarusuario',
+        pathMatch: 'prefix',
+        component: FormUsuarioComponent,
+        title: "Adicionar Usuário"
     }
 ];
 

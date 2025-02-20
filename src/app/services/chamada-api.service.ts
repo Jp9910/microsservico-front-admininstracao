@@ -50,9 +50,9 @@ export class ChamadaAPIService {
             }
         )
     }
-    
-    getUsuarios(pagina = 1, qntTake = 10): Observable<HttpResponse<IUsuario[]>> {
-        // return this.http.get<IUsuario[]>
+
+    // primeira página no spring boot é a 0
+    getUsuarios(pagina = 0, qntTake = 10): Observable<HttpResponse<IUsuario[]>> {
         console.log(pagina, qntTake)
         return this.http.get<IUsuario[]>(
             this.urlApiUsuarios.concat("/usuarios"), 
@@ -63,14 +63,25 @@ export class ChamadaAPIService {
         )
     }
 
+    // /usuarios/buscapornome?nome=us&size=10&page=0 (primeira página no spring boot é a 0)
+    getUsuarioPorNome(nome: string, pagina = 0, qntTake = 10): Observable<HttpResponse<IUsuario[]>> {
+        return this.http.get<IUsuario[]>(
+            this.urlApiUsuarios.concat("/usuarios/buscapornome"),
+            {
+                observe: 'response', 
+                params: {nome: nome, size : qntTake*(pagina-1), page: pagina}
+            }
+        )
+    }
+
     salvarNovoProduto(produto: IProduto, imagem: File|null): Observable<HttpResponse<IProduto>> {
         console.log(imagem)
         // TODO: Incluir imagem na request
         return this.http.post<IProduto>(this.urlApiProdutos.concat("/api/produto"), produto, {observe: "response", headers: {}})
     }
     
-    salvarNovoUsuario() {
-        console.log("salvar user")
+    salvarNovoUsuario(usuario: IUsuario) {
+        return this.http.post<IUsuario>(this.urlApiUsuarios.concat("/usuarios"), usuario, {observe: "response", headers: {}})
     }
 
     atualizarProduto(id:number, produto: IProduto, imagem: File|null) {
@@ -80,16 +91,16 @@ export class ChamadaAPIService {
         return this.http.put<IProduto>(this.urlApiProdutos.concat(`/api/produto/${id}`), produto, {observe: "response", headers: {}})
     }
 
-    atualizarUsuario() {
-        console.log("atualizar user")
+    atualizarUsuario(id: number, usuario: IUsuario) {
+        return this.http.put<IUsuario>(this.urlApiUsuarios.concat(`/usuarios/${id}`), usuario, {observe: "response", headers: {}})
     }
     
     excluirProduto(id: number): Observable<HttpResponse<IProduto>> {
         return this.http.delete<IProduto>(this.urlApiProdutos.concat(`/api/produto/${id}`), {observe: "response", headers: {}})
     }
 
-    excluirUsuario() {
-        console.log("excluir user")
+    desativarUsuario(id: number): Observable<HttpResponse<IUsuario>> {
+        return this.http.delete<IUsuario>(this.urlApiUsuarios.concat(`/usuarios/${id}`), {observe: "response", headers: {}})
     }
 }
 

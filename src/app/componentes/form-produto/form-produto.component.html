@@ -26,6 +26,11 @@
             >Escolher Arquivo...</button>
             <br>
             <span class="text-sm dark:text-gray-300">Arquivo selecionado: {{arquivoImagem?.name}}</span>
+            @if(formularioProduto.get('imagem')?.value !== "") {
+                <figure>
+                    <img [src]="formularioProduto.get('imagem')?.value" alt="imagem do produto"/>
+                </figure>
+            }
         </section>
 
         <label for="descricao" class="mt-3">Descrição</label>
