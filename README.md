@@ -1,5 +1,17 @@
 # MicrosservicoFrontAdministracao
 
+## Iniciar o serviço localmente
+Instalar a CLI do angular na máquina caso não tenha:
+
+> npm install -g @angular/cli
+
+Iniciar o serviço localmente:
+
+> ng serve
+
+## Iniciar o serviço com Docker
+TODO: Como iniciar a aplicação com Docker
+
 ## Usar o pipeline de CI rústico:
  1. Instalar a ferramenta make
  2. Executar `make ci` na raiz do projeto (que executará `ng lint` e `ng test`)

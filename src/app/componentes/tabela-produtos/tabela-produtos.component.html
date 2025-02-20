@@ -9,10 +9,11 @@
         type="search"
         placeholder="Buscar produtos"
         [(ngModel)]="filtroPorTexto"
-        (keyup.enter)="filtrarPorNome($event)"
+        (keyup.enter)="filtrarPorNome()"
         class="mr-2 w-2/15 h-auto ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
     />
-    <button type="button" (click)="filtrarPorNome($event)" 
+    <!-- <button type="button" (click)="filtrarPorNome($event)"  -->
+    <button type="button" (click)="filtrarPorNome()" 
         class="h-auto inline-flex items-center px-3 py-2 text-sm font-medium text-center cursor-pointer rounded-lg text-white bg-cyan-700 hover:bg-cyan-800 focus:outline-none focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-800 dark:focus:ring-cyan-800"
     >
         Buscar
