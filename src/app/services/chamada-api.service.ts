@@ -35,6 +35,10 @@ export class ChamadaAPIService {
      * Note: Observables created by HttpClient may be subscribed any number of times and will make a new backend request for each subscription.
      */
 
+    login(email: string, senha: string): Observable<HttpResponse<string>> {
+        return this.http.post<string>(this.urlApiUsuarios.concat("/auth/login"), {email:email, senha:senha}, {observe: 'response'})
+    }
+
     getProdutos(pagina = 1, qntTake = 10): Observable<HttpResponse<IProduto[]>> {
         console.log(environment.urlApiLoja);
         console.log(environment.urlApiUsuarios);

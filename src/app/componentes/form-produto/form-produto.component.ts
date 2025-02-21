@@ -40,6 +40,9 @@ export class FormProdutoComponent implements OnInit {
     }
 
     arquivoSelecionado(event: Event) {
+
+        // Otimizar imagens: https://angular.dev/tutorials/learn-angular/11-optimizing-images
+
         const input = event.target as HTMLInputElement;
         this.arquivoImagem = input.files?.length ? input.files[0] : null; //https://stackoverflow.com/questions/57700163/what-typescript-type-is-a-change-event-in-angular
         if (this.arquivoImagem) {

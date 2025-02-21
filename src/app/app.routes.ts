@@ -4,11 +4,21 @@ import { ProdutosComponent } from './paginas/produtos/produtos.component';
 import { UsuariosComponent } from './paginas/usuarios/usuarios.component';
 import { FormUsuarioComponent } from './componentes/form-usuario/form-usuario.component';
 import { HomeComponent } from './paginas/home/home.component';
+import { LoginComponent } from './paginas/login/login.component';
 
 export const routes: Routes = [
     {
+        path: '',
+        pathMatch: 'full', // o path inteiro deve ser '' para dar match
+        redirectTo: '/home'
+    },
+    {
         path: 'home',
         component: HomeComponent
+    },
+    {
+        path: 'login',
+        component: LoginComponent
     },
     {
         path: 'produtos',
@@ -31,16 +41,16 @@ export const routes: Routes = [
         title: "Editar Produto"
     },
     {
-        path: '',
-        pathMatch: 'full', // o path inteiro deve ser '' para dar match
-        redirectTo: '/home'
-    },
-    {
         path: 'adicionarusuario',
         pathMatch: 'prefix',
         component: FormUsuarioComponent,
         title: "Adicionar Usuário"
-    }
+    },
+    {
+        path: 'editarusuario/:id',
+        component: FormUsuarioComponent,
+        title: "Editar Usuario"
+    },
 ];
 
 // pathMatch:

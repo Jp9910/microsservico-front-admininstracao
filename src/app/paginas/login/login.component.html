@@ -1,0 +1,30 @@
+<section class="flex max-w-full items-center justify-center flex-col">
+    <img src="logosemnome.png" alt="imagem do logo"/>
+    <h1 class="text-2xl">Login - Administração</h1>
+    <form [formGroup]="formLogin" (ngSubmit)="login()" class="flex flex-col w-3/10 items-center">
+        <label for="inputEmail" class="mt-2">Nome</label>
+        <input
+            id="inputEmail"
+            type="email"
+            placeholder="exemplo@email.com"
+            formControlName="email"
+            (keyup.enter)="login()"
+            class="w-1/2 h-10 text-md text-center text-gray-900 border border-gray-300 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+        />
+        <label for="inputSenha" class="mt-4">Senha</label>
+        <input
+            id="inputSenha"
+            type="password"
+            placeholder="••••••••"
+            formControlName="senha"
+            (keyup.enter)="login()"
+            class="w-1/2 h-10 text-md text-center text-gray-900 border border-gray-300 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+        />
+        <button 
+            type="submit" 
+            [disabled]="formLogin.invalid" 
+            class="mt-2 h-auto inline-flex items-center px-3 py-2 text-sm font-medium text-center rounded-lg text-white  focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800"
+            [ngClass]="formLogin.valid? 'cursor-pointer bg-cyan-600 hover:bg-cyan-800 dark:bg-cyan-600 dark:hover:bg-cyan-900': 'cursor-not-allowed bg-gray-600'"
+        >Entrar</button>
+    </form>
+</section>
