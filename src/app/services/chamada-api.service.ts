@@ -4,6 +4,15 @@ import IProduto from '../types/Produto';
 import IUsuario from '../types/Usuario';
 import { Observable } from 'rxjs';
 
+// To use the environment configurations you have defined, your components must import the original environments file:
+import { environment } from '../../environments/environment';
+// This ensures that the build and serve commands can find the configurations for specific build targets.
+
+// For example, the code `fetch(environment.urlAPI)` fetches from `http://my-prod-url` in production,
+// and from `http://my-dev-url` in development. 
+// Isso de acordo com o environment selecionado com o comando usado. `ng serve --configuration development`, `ng build --configuration production`, etc...
+// Fonte: https://angular.dev/tools/cli/environments#using-environment-specific-variables-in-your-app
+
 @Injectable({
     providedIn: 'root'
 })
@@ -11,8 +20,8 @@ export class ChamadaAPIService {
 
     parametros: URLSearchParams = new URLSearchParams();
     body: object = {};
-    private readonly urlApiUsuarios:string = "http://localhost:8080"; // TODO: parametrizar
-    private readonly urlApiProdutos:string = "https://localhost:7285"; // TODO: parametrizar
+    private readonly urlApiUsuarios:string = environment.urlApiUsuarios;
+    private readonly urlApiProdutos:string = environment.urlApiLoja;
 
     constructor(private http: HttpClient) { }
 
@@ -27,6 +36,8 @@ export class ChamadaAPIService {
      */
 
     getProdutos(pagina = 1, qntTake = 10): Observable<HttpResponse<IProduto[]>> {
+        console.log(environment.urlApiLoja);
+        console.log(environment.urlApiUsuarios);
         return this.http.get<IProduto[]>(
             this.urlApiProdutos.concat("/api/produto"), 
             {

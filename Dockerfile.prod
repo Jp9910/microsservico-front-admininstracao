@@ -1,0 +1,17 @@
+# Stage 1: Build the Angular app
+FROM node:20-alpine AS build
+WORKDIR /app
+COPY . .
+
+# >>> As instruções a seguir lançam como se fosse para produção, buildando os arquivos estaticos com o `ng build`, e servindo-os com nginx
+# Instalação de dependências, faz o build e remove as dependências de desenvolvimento
+RUN npm ci \
+    && npm run build \
+    && npm prune --production
+
+# Em produção mesmo, o container do nginx vai ser subido como uma api gateway para os microsserviços
+FROM nginx:alpine
+COPY --from=build /app/dist/microsservico-front-administracao/browser /usr/share/nginx/html
+COPY ./nginx.conf /etc/nginx/conf.d/webserver.conf
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

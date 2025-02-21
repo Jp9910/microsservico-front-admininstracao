@@ -1,56 +1,73 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
 name: Node.js CI
 
 on:
     push:
-        branches: [ "main" ]
+        branches: [ "*" ]
     pull_request:
-        branches: [ "main" ]
+        branches: [ "*" ]
 
 jobs: # Um job é um conjunto de passos (testes e lint por exemplo), e jobs diferentes podem ser executados em paralelo
-    pipeline-integracao-continua: # nome do job. (o nome do check (Require status checks to pass) na ruleset do github para proteger a branch deve ser esse aqui)
+    testar: # nome do job. (o nome do check `Require status checks to pass` na ruleset do github para proteger a branch deve ser esse aqui)
 
-        runs-on: ubuntu-latest
+        runs-on: ${{ matrix.os }}
+        env:
+          TESTE_ENV_VARIABLE: "valor" # Variáveis de ambiente que podem ser usadas em qualquer passo do job, ou acessadas diretamente pelas aplicações que são executadas. Não é recomendado usar variáveis de ambiente para senhas e chaves de acesso. Use secrets para isso.
+          RUNNING_ENVIRONMENT: "ghactions"
 
         strategy:
             matrix:
-                node-version: [20.x]
-                # node-version: [18.x, 20.x, 22.x] # Isso criaria multiplos artefatos ao mesmo tempo no ultimo passo
-                # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+                node-version: [20.x, 22.x] # Isso criaria multiplos artefatos repetidos no passo que cria o artefato, então é preciso separar aquilo em outro job
+                os: ["ubuntu-latest", "ubuntu-22.04"]
 
         steps:
-        # "uses" vai usar uma action existente. "run" executa algum comando
+            # "uses" vai usar uma action existente. "run" executa algum comando
     
-        - uses: actions/checkout@v4 # Action padrão do github. Vai clonar o código, definir permissões apropriadas de arquivos, e acessar a pasta
+            - uses: actions/checkout@v4 # Action padrão do github. Vai clonar o código, definir permissões apropriadas de arquivos, e acessar a pasta
     
-        - name: Usar Node.js versão ${{ matrix.node-version }} # Dar um nome pra ação
-          uses: actions/setup-node@v4 # Action também padrão do github. Vai fazer o setup do node
-          with: # passar uma variável para essa action
-              node-version: ${{ matrix.node-version }}
-              cache: 'npm'
+            - name: Usar Node.js versão ${{ matrix.node-version }} # Dar um nome pra ação
+              uses: actions/setup-node@v4 # Action também padrão do github. Vai fazer o setup do node
+              with: # passar uma variável para essa action
+                  node-version: ${{ matrix.node-version }}
+                  cache: 'npm'
     
-        - name: Rodar um container necessário
-          run: docker run hello-world # Os servidores do GitHub Actions já vem com docker, git, e outras ferramentas comuns instaladas
+            - name: Rodar um container necessário (BD por exemplo)
+              run: docker run hello-world # Os servidores do GitHub Actions já vem com docker, git, e outras ferramentas comuns instaladas
 
-        - run: npm ci # Instala as dependências, assim como o npm install, só que a partir do package-lock, então vai instalar as dependências na versão exata especificada lá (já inclui o angular CLI)
+            - run: npm ci # Instala as dependências, assim como o npm install, só que a partir do package-lock, então vai instalar as dependências na versão exata especificada lá (já inclui o angular CLI)
 
-        - name: Executar Lint
-          run: npm run lint # (`ng lint`)
+            - name: Executar Lint
+              run: npm run lint # (`ng lint`)
 
-        - run: npm test # Executa o comando `test` do package.json. Esses testes são executados com o código fonte em TS (antes de compilar para JS)
+            - run: npm test # Executa o comando `test` do package.json. Esses testes são executados com o código fonte em TS (antes de compilar para JS)
 
-        - name: Gerar artefato (transpilar de TS para JS) # [1]
-          run: npm run build --if-present # Executa o comando `build` do package.json, se existir
+    buildar-artefato:
+        needs: testar # Esse job só vai rodar se o job testar passar
+        runs-on: ubuntu-latest
 
-        - name: Fazer upload do artefato # Esse passo se encaixaria como CD, mas separar em outro job faria com que fosse necessario reinstalar o repo, node e dependencias. Então vou manter aqui por simplicidade
-          uses: actions/upload-artifact@v4
-          with:
-              name: artefato_front_administracao
-              path: ./dist/ # ou ./dist
+        steps:
+            - uses: actions/checkout@v4 # Action padrão do github. Vai clonar o código, definir permissões apropriadas de arquivos, e acessar a pasta
+    
+            - name: Usar Node.js versão 20.x
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20.x
+                  cache: 'npm'
 
-    # Agora falta implantação contínua, mas provavelmente é feito dentro do de entrega contínua, pois precisa do artefato gerado
+            - name: Gerar artefato (transpilar de TS para JS) # [1]
+              run: npm run build --if-present # Executa o comando `build` do package.json, se existir
+
+            - name: Fazer upload do artefato # Esse passo se encaixaria como CD, mas separar em outro job faria com que fosse necessario reinstalar o repo, node e dependencias. Então vou manter aqui por simplicidade
+              uses: actions/upload-artifact@v4
+              with:
+                  name: artefato_front_administracao
+                  path: ./dist/ # ou ./dist
+
+    dockerbuild:
+        needs: buildar-artefato # Esse job só vai rodar se o job buildar-artefato passar
+        runs-on: ubuntu-latest
+        secrets: inherit # Habilitar secrets do github actions para esse job. Necessário pois é um job em outro arquivo.
+        steps:
+            - uses: ./.github/workflows/dockerbuild.yml # Usar um arquivo local para definir os passos. Isso é útil para reutilizar passos em diferentes jobs, ou para manter o arquivo principal mais limpo.
 
 
 # Usar variáveis no pipeline de actions: https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables
@@ -59,3 +76,7 @@ jobs: # Um job é um conjunto de passos (testes e lint por exemplo), e jobs dife
 # Nota: Embora seja possível configurar variáveis de ambiente no executor, essa prática não é recomendada. As variáveis de ambiente podem ser expostas em logs de execução, comprometendo a segurança das credenciais.
 # [1] JS is both interpreted and compiled (compiled just-in-time, instead of ahead-of-time). But for most intents and purposes, JS is only interpreted. 
 #        Unless you work with browser engines, you don't have to worry about how it compiles *some* parts of the code (to be more efficient)
+
+
+# Sobre usar ambientes próprios para execução do pipeline:
+# https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/about-self-hosted-runners

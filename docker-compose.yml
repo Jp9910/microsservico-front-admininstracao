@@ -1,0 +1,23 @@
+# Contains all the services that the front-administracao service depends on
+
+name: front-administracao
+services:
+  front-administracao:
+    container_name: front-administracao
+    build:
+      dockerfile: ./Dockerfile.dev
+    ports:
+      - "4200:4200"
+    depends_on:
+      - catalogo
+      - autenticacao
+
+  loja: # Pegar a imagem do Docker Hub, que deve ser automaticamente atualizada a cada push no repo da loja
+    image: jp9910/loja:main # <docker_hub_user>/<nome_da_imagem_upada>:<branch>
+    ports:
+      - "8080:8080"
+
+  autenticacao: # Pegar a imagem do Docker Hub, que deve ser automaticamente atualizada a cada push no repo da autenticacao
+    image: jp9910/autenticacao:main
+    ports:
+      - "8081:8081"
