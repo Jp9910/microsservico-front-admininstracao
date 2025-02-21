@@ -64,10 +64,8 @@ jobs: # Um job é um conjunto de passos (testes e lint por exemplo), e jobs dife
 
     dockerbuild:
         needs: buildar-artefato # Esse job só vai rodar se o job buildar-artefato passar
-        runs-on: ubuntu-latest
+        uses: ./.github/workflows/dockerbuild.yml # Usar um arquivo local para definir os passos. Isso é útil para reutilizar passos em diferentes jobs, ou para manter o arquivo principal mais limpo.
         secrets: inherit # Habilitar secrets do github actions para esse job. Necessário pois é um job em outro arquivo.
-        steps:
-            - uses: ./.github/workflows/dockerbuild.yml # Usar um arquivo local para definir os passos. Isso é útil para reutilizar passos em diferentes jobs, ou para manter o arquivo principal mais limpo.
 
 
 # Usar variáveis no pipeline de actions: https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables
