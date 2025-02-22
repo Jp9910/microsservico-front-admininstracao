@@ -2,6 +2,7 @@
     <img src="logosemnome.png" alt="imagem do logo"/>
     <h1 class="text-2xl">Login - Administração</h1>
     <form [formGroup]="formLogin" (ngSubmit)="login()" class="flex flex-col w-3/10 items-center">
+        @if (this.loginIncorreto) {<strong class="mt-2 text-md text-gray-200">Usuário ou senha inválidos</strong>}
         <fieldset class="mt-2">
             <legend>Email:</legend>
             <input
@@ -12,7 +13,7 @@
                 (keyup.enter)="login()"
                 class="h-10 text-md text-center text-gray-900 border border-gray-300 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
             />
-            @if (this.formLogin.get("email")?.errors?.["email"]) {<p class="text-sm text-gray-300">Email inválido</p>}
+            @if (this.formLogin.get("email")?.errors?.["email"]) {<p class="text-sm text-gray-200">Email inválido</p>}
         </fieldset>
         <fieldset class="mt-4">
             <legend>Senha</legend>
@@ -24,7 +25,7 @@
                 (keyup.enter)="login()"
                 class="h-10 text-md text-center text-gray-900 border border-gray-300 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
             />
-            @if (this.formLogin.get("senha")?.errors?.["required"]) {<p class="text-sm text-gray-300">Digite a senha</p>}
+            @if (this.formLogin.get("senha")?.errors?.["required"]) {<p class="text-sm text-gray-200">Digite a senha</p>}
         </fieldset>
         <button 
             type="submit" 

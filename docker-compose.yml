@@ -1,11 +1,11 @@
 # Contains all the services that the front-administracao service depends on
 
-name: front-administracao
+name: ms-front-adm
 services:
 
   # O serviço vai rodar como se tivesse na máquina local, por causa do argumento `--host 0.0.0.0` no `ng serve`
   front-administracao:
-    container_name: front-administracao
+    container_name: front-adm
     build:
       dockerfile: ./Dockerfile.dev
     volumes:

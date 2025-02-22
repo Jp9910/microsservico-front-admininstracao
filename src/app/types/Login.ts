@@ -1,4 +1,4 @@
-export default interface IUsuario {
+export default interface ILogin {
     email: string,
     senha: string
 }

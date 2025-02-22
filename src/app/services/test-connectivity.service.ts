@@ -16,6 +16,6 @@ export class TestConnectivityService {
     }
 
     testApiUsuarios() {
-        return this.http.get(this.urlApiUsuarios.concat('/usuarios'));
+        return this.http.post(this.urlApiUsuarios.concat('/auth/login'), { email: "teste@email.com", senha: "teste" });
     }
 }

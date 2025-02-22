@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ChamadaAPIService } from '../../services/chamada-api.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { catchError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ApiLojaService } from '../../services/api-loja.service';
 
 @Component({
     selector: 'app-form-adicionar-produto',
@@ -21,7 +21,7 @@ export class FormProdutoComponent implements OnInit {
 
 
     // injetar a dependencia do service no componente pelo construtor
-    constructor (private servicoAPI: ChamadaAPIService, private activatedRoute: ActivatedRoute) { }
+    constructor (private servicoAPI: ApiLojaService, private activatedRoute: ActivatedRoute) { }
 
     // ngOnInit() é executado quando o componente é criado
     ngOnInit(): void {

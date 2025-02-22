@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import IUsuario from '../../types/Usuario';
-import { ChamadaAPIService } from '../../services/chamada-api.service';
-import { catchError, retry } from 'rxjs';
+import { catchError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ApiUsuariosService } from '../../services/api-usuarios.service';
 
 @Component({
     selector: 'app-tabela-usuarios',
@@ -19,7 +19,7 @@ export class TabelaUsuariosComponent implements OnInit {
     paginaTabela = 1;
     qntUsuariosPorPagina = 10;
 
-    constructor(private servicoAPI: ChamadaAPIService) { }
+    constructor(private servicoAPI: ApiUsuariosService) { }
 
     ngOnInit(): void {
         this.getUsuarios();
@@ -75,7 +75,7 @@ export class TabelaUsuariosComponent implements OnInit {
         console.log("Buscando usuarios...")
         console.log(this.paginaTabela)
         this.servicoAPI.getUsuarios(this.paginaTabela, this.qntUsuariosPorPagina)
-            .pipe(retry(1), catchError(this.handleErroRequisicao))
+            .pipe(/*retry(1),*/ catchError(this.handleErroRequisicao))
             .subscribe((resposta) => {
                 console.log(resposta)
                 if (resposta.ok && resposta.body) { this.usuarios = resposta.body }

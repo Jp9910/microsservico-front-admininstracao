@@ -2,9 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
-import { catchError, retry } from 'rxjs';
-import { ChamadaAPIService } from '../../services/chamada-api.service';
+import { catchError } from 'rxjs';
 import IProduto from '../../types/Produto';
+import { ApiLojaService } from '../../services/api-loja.service';
 // import listaDeProdutos from '../../../assets/produtos.json';
 
 console.log()
@@ -22,7 +22,7 @@ export class TabelaProdutosComponent implements OnInit {
     paginaTabela = 1;
     qntProdutosPorPagina = 10;
 
-    constructor(private servicoAPI: ChamadaAPIService) {}
+    constructor(private servicoAPI: ApiLojaService) {}
     
     ngOnInit(): void {
         console.log(this.testeProp);
@@ -79,7 +79,7 @@ export class TabelaProdutosComponent implements OnInit {
         console.log("Buscando produtos...")
         console.log(this.paginaTabela)
         this.servicoAPI.getProdutos(this.paginaTabela, this.qntProdutosPorPagina)
-            .pipe(retry(1), catchError(this.handleErroRequisicao))
+            .pipe(/*retry(1),*/ catchError(this.handleErroRequisicao))
             .subscribe((resposta) => {
                 console.log(resposta)
                 if (resposta.ok && resposta.body) {this.produtos = resposta.body}
