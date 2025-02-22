@@ -6,6 +6,7 @@ import { environment } from '../../environments/environment';
 import { UsuarioService } from './usuario.service';
 import IUsuario from '../types/Usuario';
 import { TokenService } from './token.service';
+import IPagina from '../types/Pagina';
 
 @Injectable({
     providedIn: 'root'
@@ -29,10 +30,10 @@ export class ApiUsuariosService {
             )
     }
 
-    // primeira página no spring boot é a 0
-    getUsuarios(pagina = 0, qntTake = 10): Observable<HttpResponse<IUsuario[]>> {
+    getUsuarios(pagina = 1, qntTake = 10): Observable<HttpResponse<{content: IUsuario[], page: IPagina}>> {
         console.log(pagina, qntTake)
-        return this.http.get<IUsuario[]>(
+        pagina -= 1; // primeira página no spring boot é a 0
+        return this.http.get<{content: IUsuario[], page: IPagina}>(
             this.urlApiUsuarios.concat("/usuarios"),
             {
                 observe: 'response',
@@ -42,9 +43,13 @@ export class ApiUsuariosService {
         )
     }
 
+    getUsuarioPorId(id: string): Observable<HttpResponse<IUsuario>> {
+        return this.http.get<IUsuario>(this.urlApiUsuarios.concat(`/usuarios/${id}`), { observe: 'response' })
+    }
+
     // /usuarios/buscapornome?nome=us&size=10&page=0 (primeira página no spring boot é a 0)
-    getUsuarioPorNome(nome: string, pagina = 0, qntTake = 10): Observable<HttpResponse<IUsuario[]>> {
-        return this.http.get<IUsuario[]>(
+    getUsuarioPorNome(nome: string, pagina = 0, qntTake = 10): Observable<HttpResponse<{content: IUsuario[], page: IPagina}>> {
+        return this.http.get<{content: IUsuario[], page: IPagina}>(
             this.urlApiUsuarios.concat("/usuarios/buscapornome"),
             {
                 observe: 'response',
@@ -54,7 +59,11 @@ export class ApiUsuariosService {
     }
 
     salvarNovoUsuario(usuario: IUsuario) {
-        return this.http.post<IUsuario>(this.urlApiUsuarios.concat("/usuarios"), usuario, { observe: "response", headers: {} })
+        return this.http.post<IUsuario>(this.urlApiUsuarios.concat("/usuarios/cadastrar"), usuario, { observe: "response", headers: {} })
+    }
+
+    salvarNovoUsuarioAdmin(usuario: IUsuario) {
+        return this.http.post<IUsuario>(this.urlApiUsuarios.concat("/usuarios/cadastraradmin"), usuario, { observe: "response", headers: {} })
     }
 
     atualizarUsuario(id: number, usuario: IUsuario) {

@@ -1,1 +1,35 @@
-<p>form-usuario works!</p>
+<section class="mx-auto flex flex-col bg-teal-50 dark:bg-blue-500 max-w-5/20 w-auto mt-5 rounded-lg shadow-2xl">
+    <div class="flex justify-between mt-2">
+        <h1 class="text-3xl font-bold mb-5 ml-2">{{tituloFormulario}}</h1>
+        <button class="flex mr-2 hover:cursor-pointer max-w-20 h-9" type="button" [routerLink]="['/usuarios']">
+            <svg width="32px" height="32px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#000000" stroke="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill="#ffffff" d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z"></path><path fill="#ffffff" d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z"></path></g></svg>
+            <span class="pt-1">Voltar</span>
+        </button>
+    </div>
+    <form [formGroup]="formUsuario" (ngSubmit)="adicionarOuEditarUsuario()" class="flex flex-col min-w-7/10 max-w-8/10 pl-2">
+        <label for="nome">Nome</label>
+        <input formControlName="nome" id="nome" type="text" required placeholder="Ana Silva" class="mb-2 w-4/5 p-2 h-auto text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"/>
+
+        <label for="email">Email</label>
+        <input formControlName="email" id="email" type="email" required placeholder="exemplo@email.com" class="mb-2 w-4/5 p-2 h-auto text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"/>
+
+        <label for="senha">Senha</label>
+        <input formControlName="senha" id="senha" type="password" placeholder="******" class="mb-2 w-4/5 p-2 h-auto text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"/>
+
+        <fieldset class="flex items-center mb-4">
+            <input checked formControlName="isAdmin" id="admin" type="checkbox" value="true" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+            <label for="admin" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Administrador</label>
+        </fieldset>
+
+        <section class="flex max-w-8/10 space-x-2 pb-4">
+            <button type="button" (click)="limparFormulario()" class="h-auto inline-flex items-center px-3 py-2 text-sm font-medium text-center cursor-pointer rounded-lg text-white bg-cyan-700 hover:bg-cyan-800 focus:outline-none focus:ring-cyan-300 dark:bg-cyan-700 dark:hover:bg-cyan-900 dark:focus:ring-cyan-800"
+            >Limpar</button>
+            <button
+                type="submit"
+                [disabled]="formUsuario.invalid"
+                class="h-auto inline-flex items-center px-3 py-2 text-sm font-medium text-center rounded-lg text-white  focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800"
+                [ngClass]="formUsuario.valid? 'cursor-pointer bg-cyan-700 hover:bg-cyan-800 dark:bg-cyan-700 dark:hover:bg-cyan-900': 'cursor-not-allowed bg-gray-600'"
+            >Salvar</button>
+        </section>
+    </form>
+</section>

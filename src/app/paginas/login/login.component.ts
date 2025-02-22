@@ -33,15 +33,14 @@ export class LoginComponent implements OnInit {
             next: response => {
                 this.loginIncorreto = false;
                 console.log(response)
-                console.log("Login Realizado com Sucesso") 
+                console.log("Login Realizado com Sucesso")
+                this.router.navigateByUrl("/home");
                 // O armazenamento do token é feito pelo usuario.service.ts
             },
             error: error => {
                 console.error('Erro no Login: ', error)
                 this.loginIncorreto = true;
             }
-        });
-        
-        // this.router.navigateByUrl("/home");
+        });        
     }
 }

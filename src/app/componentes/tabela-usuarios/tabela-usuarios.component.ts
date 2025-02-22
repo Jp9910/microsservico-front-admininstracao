@@ -43,7 +43,7 @@ export class TabelaUsuariosComponent implements OnInit {
             .pipe(catchError(this.handleErroRequisicao))
             .subscribe((resposta) => {
                 console.log(resposta)
-                if (resposta.ok && resposta.body) { this.usuarios = resposta.body }
+                if (resposta.ok && resposta.body) { this.usuarios = resposta.body.content }
             });
     }
 
@@ -78,7 +78,7 @@ export class TabelaUsuariosComponent implements OnInit {
             .pipe(/*retry(1),*/ catchError(this.handleErroRequisicao))
             .subscribe((resposta) => {
                 console.log(resposta)
-                if (resposta.ok && resposta.body) { this.usuarios = resposta.body }
+                if (resposta.ok && resposta.body) { this.usuarios = resposta.body.content }
             });
     }
 

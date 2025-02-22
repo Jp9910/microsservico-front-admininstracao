@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TabelaUsuariosComponent } from '../../componentes/tabela-usuarios/tabela-usuarios.component';
+import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
     selector: 'app-usuarios',
@@ -9,5 +10,10 @@ import { TabelaUsuariosComponent } from '../../componentes/tabela-usuarios/tabel
     templateUrl: './usuarios.component.html',
 })
 export class UsuariosComponent {
-    // TODO: Implementar CRUD de usuários
+
+    constructor(private usuarioService : UsuarioService) {}
+
+    logout() {
+        this.usuarioService.logout();
+    }
 }
