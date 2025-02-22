@@ -25,9 +25,10 @@ services:
     ports:
       - "8079:8079"
       - "8080:8080"
-    # command: /bin/sh -c "dotnet ef database update" (precisa do sdk) # TODO: Ver como executar as migrations automaticamente
-    env_file:
-      - .env.api-loja
+    env_file: ".env.api-loja"
+    command: sh ./entrypoint-loja.sh
+    volumes:
+      - ./:/src
     depends_on:
       postgres-loja:
         condition: service_healthy
@@ -40,7 +41,7 @@ services:
     env_file:
       - .env.api-autenticacao
     environment:
-      SPRING_DATASOURCE_URL: "postgres-autenticacao:5432"
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres-autenticacao:5432/autenticacao"
       SPRING_ACTIVE_PROFILE: dev
     ports:
       - "8081:8081"

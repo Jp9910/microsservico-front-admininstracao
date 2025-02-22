@@ -25,12 +25,12 @@ export class AppComponent implements OnInit {
 
         this.testConnectivityService.testApiLoja().subscribe({
             next: response => console.log('API Loja is reachable', response),
-            error: error => console.error('API Loja is not reachable', error)
+            error: error => console.error('Erro ao acessar API loja: ', error)
         });
 
         this.testConnectivityService.testApiUsuarios().subscribe({
             next: response => console.log('API Usuarios is reachable', response),
-            error: error => console.error('API Usuarios is not reachable', error)
+            error: error => console.error('Erro ao acessar API usuários:', error)
         });
     }
 }
