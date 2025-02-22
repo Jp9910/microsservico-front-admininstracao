@@ -14,8 +14,13 @@ Iniciar o serviço em desenvolvimento local (inicia apenas o serviço do front, 
 
 ## Iniciar o serviço com Docker
 Iniciar o serviço em desenvolvimento em containers (inicia todos os serviços necessários, então requisições devem funcionar):
+1. Criar arquivos de ambiente 
+- `.senhapostgresauth.txt`;
+- `.senhapostgresloja.txt`;
+- `env.api-loja`;
+- `env.api-autenticacao`, que contêm configurações dos serviços de autenticação e loja e seus BDs.
 
-> docker-compose up --build
+2. Executar `docker-compose up --build`
 
 ## Usar o pipeline de CI rústico:
  1. Instalar a ferramenta make

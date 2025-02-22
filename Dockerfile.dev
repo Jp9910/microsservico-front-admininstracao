@@ -6,7 +6,8 @@ COPY . .
 # >>> Lançar para desenvolvimento, com o servidor de aplicação do Angular
 RUN npm install -g @angular/cli@19.1
 RUN npm install
-CMD ["ng", "serve", "--host", "0.0.0.0"]
+# Aparentemente, vai rodar como se tivesse na máquina local mesmo, não sei como nem porque, mas parece ser devido ao `--host 0.0.0.0`. O poll é para o hot-reload
+CMD ["ng", "serve", "--host", "0.0.0.0", "--poll", "500"]
 
 
 # >>> As instruções a seguir lançam como se fosse para produção, buildando os arquivos estaticos com o `ng build`, e servindo-os com nginx

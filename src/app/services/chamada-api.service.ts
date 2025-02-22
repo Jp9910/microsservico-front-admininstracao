@@ -2,6 +2,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import IProduto from '../types/Produto';
 import IUsuario from '../types/Usuario';
+import ILogin from '../types/ILogin';
 import { Observable } from 'rxjs';
 
 // To use the environment configurations you have defined, your components must import the original environments file:
@@ -35,8 +36,9 @@ export class ChamadaAPIService {
      * Note: Observables created by HttpClient may be subscribed any number of times and will make a new backend request for each subscription.
      */
 
-    login(email: string, senha: string): Observable<HttpResponse<string>> {
-        return this.http.post<string>(this.urlApiUsuarios.concat("/auth/login"), {email:email, senha:senha}, {observe: 'response'})
+    login(dadosLogin: ILogin): Observable<HttpResponse<string>> {
+        // console.log("dados login:", dadosLogin)
+        return this.http.post<string>(this.urlApiUsuarios.concat("/auth/login"), dadosLogin, {observe: 'response'})
     }
 
     getProdutos(pagina = 1, qntTake = 10): Observable<HttpResponse<IProduto[]>> {

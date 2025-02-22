@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ChamadaAPIService } from '../../services/chamada-api.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import ILogin from '../../types/ILogin';
 
 @Component({
     selector: 'app-login',
@@ -26,7 +27,12 @@ export class LoginComponent implements OnInit {
     }
 
     login() {
-        this.servicoAPI.login(this.formLogin.get("email")?.value, this.formLogin.get("senha")?.value)
+        // const dadosLogin:ILogin = {email: this.formLogin.get("email")?.value, senha: this.formLogin.get("senha")?.value}
+        this.servicoAPI.login(this.formLogin.value as ILogin).subscribe({
+            next: response => console.log(response),
+            error: error => console.error('Erro no Login: ', error)
+        });
+        
         // this.router.navigateByUrl("/home");
     }
 }
