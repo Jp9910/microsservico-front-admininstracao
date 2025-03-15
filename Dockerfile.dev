@@ -4,8 +4,11 @@ WORKDIR /app
 COPY . .
 
 # >>> Lançar para desenvolvimento, com o servidor de aplicação do Angular
+
+# TODO:? Executar esses installs ao iniciar o container pra o build ficar mais leve
 RUN npm install -g @angular/cli@19.1
 RUN npm install
+
 # Aparentemente, vai rodar como se tivesse na máquina local mesmo, não sei como nem porque, mas parece ser devido ao `--host 0.0.0.0`. O poll é para o hot-reload
 CMD ["ng", "serve", "--host", "0.0.0.0", "--poll", "500"]
 
