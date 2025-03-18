@@ -23,12 +23,12 @@ export const routes: Routes = [
         canActivate: [rotasGuard]
     },
     {
-        path: 'produtos',
+        path: 'gerenciarprodutos',
         component: ProdutosComponent,
         canActivate: [rotasGuard]
     },
     {
-        path: 'usuarios',
+        path: 'gerenciarusuarios',
         component: UsuariosComponent,
         canActivate: [rotasGuard]
     },

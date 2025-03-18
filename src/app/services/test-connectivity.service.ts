@@ -12,6 +12,7 @@ export class TestConnectivityService {
     constructor(private http: HttpClient) { }
 
     testApiLoja() {
+        // console.log(this.urlApiLoja)
         return this.http.get(this.urlApiLoja.concat('/api/produto'));
     }
 
